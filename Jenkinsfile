@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven3'
-        nodejs 'Node18'
-    }
-
     stages {
 
         stage('Checkout') {
@@ -17,23 +12,12 @@ pipeline {
 
         stage('Build Backend') {
             steps {
-                echo "Compilando backend con Maven..."
+                echo "Compilando backend con Maven Wrapper..."
                 dir('sneaker-store-back') {
-                    sh 'mvn clean package -DskipTests'
+                    sh './mvnw clean package -DskipTests || mvn clean package -DskipTests'
                 }
             }
         }
-
-        stage('Build Frontend') {
-            steps {
-                echo "Compilando frontend con npm..."
-                dir('sneaker-store-front') {
-                    sh 'npm install'
-                    sh 'npm run build'
-                }
-            }
-        }
-
     }
 
     post {
