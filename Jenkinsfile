@@ -14,7 +14,8 @@ pipeline {
             steps {
                 echo "Compilando backend con Maven Wrapper..."
                 dir('sneaker-store-back') {
-                    sh './mvnw clean package -DskipTests || mvn clean package -DskipTests'
+                    sh 'chmod +x mvnw'
+                    sh './mvnw clean package -DskipTests'
                 }
             }
         }
@@ -25,7 +26,7 @@ pipeline {
             echo "Pipeline ejecutado correctamente ✔"
         }
         failure {
-            echo "Pipeline falló "
+            echo "Pipeline falló ❌"
         }
     }
 }
