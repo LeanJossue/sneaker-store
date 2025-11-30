@@ -25,4 +25,9 @@ public class Brand {
     @OneToMany(mappedBy = "brand")
     @JsonIgnore
     private List<Sneaker> sneakers;
+
+    public Brand (Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
