@@ -1,0 +1,32 @@
+name: Java CI with Codecov
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Build backend with Maven and generate coverage
+      working-directory: sneaker-store-back
+      run: mvn clean install -DskipTests=false
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: sneaker-store-back/target/site/jacoco/jacoco.xml
+        fail_ci_if_error: true
