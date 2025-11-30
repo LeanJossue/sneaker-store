@@ -16,7 +16,7 @@ jobs:
       - name: Run tests and collect coverage
         working-directory: ./sneaker-store-back
         run: mvn -B test
-      - name: Upload coverage to Codecov
+      - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
