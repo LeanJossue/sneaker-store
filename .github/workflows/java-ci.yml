@@ -18,15 +18,16 @@ jobs:
     - name: Set up Java
       uses: actions/setup-java@v4
       with:
-        java-version: '17' # Specify your Java version
-        distribution: 'temurin' # Or other distribution like 'adopt'
+        java-version: '17'
+        distribution: 'temurin'
 
-    - name: Build with Maven and generate coverage
-      run: mvn clean install -DskipTests=false # Adjust based on your build tool and test execution
+    - name: Build backend with Maven and generate coverage
+      working-directory: ./sneaker-store-back
+      run: mvn clean install -DskipTests=false
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
       with:
-        token: ${{ secrets.CODECOV_TOKEN }} # Store your Codecov token as a GitHub Secret
-        files: ./target/site/jacoco/jacoco.xml # Path to your coverage report
-        fail_ci_if_error: true # Optional: Fail the CI if Codecov upload fails
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./sneaker-store-back/target/site/jacoco/jacoco.xml
+        fail_ci_if_error: true
