@@ -19,7 +19,7 @@ public class Sneaker {
     private String color;
     private Float price;
     private Integer stock;
-    private Integer size;
+    private Float size;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")

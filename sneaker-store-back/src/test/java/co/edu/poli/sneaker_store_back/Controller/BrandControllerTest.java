@@ -1,5 +1,6 @@
-package co.edu.poli.sneaker_store_back.controller;
+package co.edu.poli.sneaker_store_back.Controller;
 
+import co.edu.poli.sneaker_store_back.controller.BrandController;
 import co.edu.poli.sneaker_store_back.entity.Brand;
 import co.edu.poli.sneaker_store_back.service.BrandService;
 import com.fasterxml.jackson.databind.ObjectMapper;

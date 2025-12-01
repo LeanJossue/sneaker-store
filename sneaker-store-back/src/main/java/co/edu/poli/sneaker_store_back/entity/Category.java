@@ -25,5 +25,10 @@ public class Category {
     @OneToMany(mappedBy = "category")
     @JsonIgnore
     private List<Sneaker> sneakers;
+
+    public Category (Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
 
