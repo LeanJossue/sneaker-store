@@ -1,36 +1,36 @@
-name: CI
+name: Java CI with Codecov
 
 on:
   push:
-    branches: [ master ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ master ]
+    branches: [ "master" ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build Docker image (backend)
-        run: docker build -t sneaker-back-ci ./sneaker-store-back
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-      - name: Run tests inside container and extract coverage
-        run: |
-          # Run backend container and create coverage inside it
-          docker run --name test-container sneaker-back-ci
+      - name: Build backend with Maven
+        working-directory: ./sneaker-store-back
+        run: mvn clean install -DskipTests=true
 
-          # Copy jacoco XML from container to host
-          docker cp test-container:/app/target/site/jacoco/jacoco.xml coverage.xml
-
-          # Stop & remove container
-          docker rm -f test-container
+      - name: Run tests with Maven
+        working-directory: ./sneaker-store-back
+        run: mvn test
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage.xml
+          files: ./sneaker-store-back/target/site/jacoco/jacoco.xml
           fail_ci_if_error: true
